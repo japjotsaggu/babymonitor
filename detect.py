@@ -3,11 +3,12 @@ import cv2
 from torchvision.transforms.functional import InterpolationMode
 from yolov5.models.experimental import attempt_load
 from yolov5.utils.general import non_max_suppression
-from yolov5.utils.datasets import letterbox
+
+def resize_frame(frame, new_shape):
+    return cv2.resize(frame, new_shape, interpolation=cv2.INTER_LINEAR)
 
 def detect_objects(video_path):
-
-    weights = 'yolov5x.pt' 
+    weights = 'yolov5x.pt'  
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = attempt_load(weights, map_location=device)
 
@@ -17,8 +18,8 @@ def detect_objects(video_path):
         if not ret:
             break
 
-        img = letterbox(frame, new_shape=640)[0]
-        img = img[:, :, ::-1].transpose(2, 0, 1)  
+        frame_resized = resize_frame(frame, (640, 640))
+        img = frame_resized[:, :, ::-1].transpose(2, 0, 1) 
         img = torch.from_numpy(img).float().to(device) / 255.0
         if img.ndimension() == 3:
             img = img.unsqueeze(0)
