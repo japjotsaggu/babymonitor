@@ -1,3 +1,4 @@
-torch torchvision
+torch 
+torchvision
 opencv-python
 yolov5
