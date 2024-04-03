@@ -41,5 +41,5 @@ def detect_objects(video_path):
     cv2.destroyAllWindows()
 
 if __name__ == "__main__":
-    video_path = 'babymonitor/videoplayback.mp4'
+    video_path = 'videoplayback.mp4'
     detect_objects(video_path)
