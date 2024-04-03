@@ -24,7 +24,7 @@ def detect_and_caption(video_path):
         if not ret:
             break
 
-        # Perform object detection using YOLOv5
+        #object detection w YOLO
         results = model(frame)
         results.render()
 
@@ -34,7 +34,7 @@ def detect_and_caption(video_path):
             cv2.rectangle(frame, (int(det[0]), int(det[1])), (int(det[2]), int(det[3])), (255, 0, 0), 2)
             cv2.putText(frame, label, (int(det[0]), int(det[1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
 
-        # Perform image captioning using BLIP
+        # image captioning using BLIP
         image = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
         transform = transforms.Compose([
             transforms.Resize((384, 384), interpolation=InterpolationMode.BICUBIC),
@@ -55,6 +55,5 @@ def detect_and_caption(video_path):
     cv2.destroyAllWindows()
 
 if __name__ == "__main__":
-    # Replace 'video_path' with your video file path
-    video_path = 'your_video.mp4'
+    video_path = 'videoplayback.mp4'
     detect_and_caption(video_path)
