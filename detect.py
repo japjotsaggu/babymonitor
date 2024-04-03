@@ -20,7 +20,7 @@ def detect_objects(video_path):
 
         frame_resized = resize_frame(frame, (640, 640))
         img = frame_resized[:, :, ::-1].transpose(2, 0, 1)  
-        img = torch.from_numpy(img).float() / 255.0
+        img = torch.from_numpy(img.copy()).float() / 255.0 
         if img.ndimension() == 3:
             img = img.unsqueeze(0)
 
@@ -35,7 +35,6 @@ def detect_objects(video_path):
                     cv2.putText(frame, label, (int(xyxy[0]), int(xyxy[1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
 
         cv2.imshow('frame', frame)
-
 
     cap.release()
     cv2.destroyAllWindows()
